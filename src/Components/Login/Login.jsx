@@ -1,7 +1,18 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { authProvider } from "../../Authprovider/Authprovider";
 
 
 const Login = () => {
+    const {name}=useContext(authProvider);
+    
+
+    const handleLogin = e =>{
+        e.preventDefault()
+        const userEmail = e.target.email.value;
+        const userPassword = e.target.password.value;
+    }
+
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -11,7 +22,7 @@ const Login = () => {
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                     <div className="card-body">
-                        <form>
+                        <form onSubmit={handleLogin}>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
