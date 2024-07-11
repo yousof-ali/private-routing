@@ -4,13 +4,21 @@ import { authProvider } from "../../Authprovider/Authprovider";
 
 
 const Login = () => {
-    const {name}=useContext(authProvider);
+    const {loginUser}=useContext(authProvider);
     
 
     const handleLogin = e =>{
         e.preventDefault()
         const userEmail = e.target.email.value;
         const userPassword = e.target.password.value;
+
+        loginUser(userEmail,userPassword)
+        .then((result)=>{
+            console.log(result.user);
+        })
+        .catch((error)=>{
+            console.log(error.message);
+        })
     }
 
     return (
