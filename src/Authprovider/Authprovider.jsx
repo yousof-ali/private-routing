@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword,onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../Components/Firebase/firebase.config";
-import { GoogleAuthProvider,signInWithPopup,GithubAuthProvider, } from "firebase/auth";
+import { GoogleAuthProvider,signInWithPopup,GithubAuthProvider, TwitterAuthProvider } from "firebase/auth";
 
 export const authProvider = createContext()
 
@@ -11,7 +11,8 @@ const Authprovider = ({children}) => {
     const [loder,setLoader]=useState(true);
 
     const googoleprovider = new GoogleAuthProvider()
-    const gitHubProvider = new GithubAuthProvider
+    const gitHubProvider = new GithubAuthProvider()
+    const twitterprovider = new TwitterAuthProvider();
 
     const registerUser = (email,password)=>{
         setLoader(true);
@@ -43,8 +44,11 @@ const Authprovider = ({children}) => {
     const LoginWithGitHub=()=>{
         return signInWithPopup(auth,gitHubProvider);
     }
+    const LoginWithTwittwe=()=>{
+        return signInWithPopup(auth,twitterprovider)
+    }
 
-    const values = {user,registerUser,loginUser,logOut,loder,LoginWithGoogle,LoginWithGitHub}
+    const values = {user,registerUser,loginUser,logOut,loder,LoginWithGoogle,LoginWithGitHub,LoginWithTwittwe}
     return (
         <authProvider.Provider value={values}>
             {children}

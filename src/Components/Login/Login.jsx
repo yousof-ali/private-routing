@@ -7,7 +7,7 @@ import { FaGoogle, FaTwitter,FaGithub  } from "react-icons/fa";
 
 
 const Login = () => {
-    const { loginUser,LoginWithGoogle,LoginWithGitHub } = useContext(authProvider);
+    const { loginUser,LoginWithGoogle,LoginWithGitHub,LoginWithTwittwe } = useContext(authProvider);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("")
     const navigate = useNavigate();
@@ -69,7 +69,17 @@ const Login = () => {
         })
     }
     const handleTwitterLogin=()=>{
-        console.log("login twitter")
+        setSuccess('');
+        setError("");
+        LoginWithTwittwe()
+        .then((result)=>{
+            console.log(result.user);
+            navigate("/");
+
+        })
+        .catch(()=>{
+            setError("something wrong!")
+        })
     }
     const handleGitHubLogin=()=>{
         setError("");
