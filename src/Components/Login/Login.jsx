@@ -3,10 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { authProvider } from "../../Authprovider/Authprovider";
 import { sendPasswordResetEmail } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
+import { FaGoogle, FaTwitter,FaGithub  } from "react-icons/fa";
 
 
 const Login = () => {
-    const { loginUser } = useContext(authProvider);
+    const { loginUser,LoginWithGoogle } = useContext(authProvider);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("")
     const navigate = useNavigate();
@@ -54,6 +55,27 @@ const Login = () => {
         })
         
     }
+    const handleGoogleLogin=()=>{
+        setSuccess('');
+        setError("");
+        console.log("login google");
+        LoginWithGoogle()
+        .then((result)=>{
+            console.log(result.user);
+            navigate("/");
+
+        })
+        .catch(()=>{
+            setError("something wrong!")
+        })
+    }
+    const handleTwitterLogin=()=>{
+        console.log("login twitter")
+    }
+    const handleGitHubLogin=()=>{
+        console.log("login github")
+    }
+    
 
     return (
         <div className="hero bg-base-200 min-h-screen">
@@ -91,6 +113,14 @@ const Login = () => {
                             </div>
                         </form>
                         <p>New? <Link to={"/register"} className="btn btn-link">Register</Link></p>
+                        
+                        <p>Or login With ?</p>
+                        <div className="flex items-center justify-center gap-4">
+                            <a onClick={handleGoogleLogin} ><FaGoogle className="text-2xl" /></a>
+                            <a onClick={handleTwitterLogin} ><FaTwitter className="text-2xl" /></a>
+                            <a onClick={handleGitHubLogin} ><FaGithub  className="text-2xl" /></a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

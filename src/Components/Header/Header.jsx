@@ -56,6 +56,11 @@ const Header = () => {
                 {
                     user?
                     <>
+                      {
+                        user.photoURL?
+                        <img className="w-12 border mr-4 rounded-full" src={user.photoURL} alt="" />
+                        :<img className="w-12 border mr-4 rounded-full" src="/public/img/user1.jpg" />
+                      }
                       <Link onClick={handlelogOut}><button className="btn">Log Out</button></Link>
                     </>
                     :<Link to={"/login"}><button className="btn">Login</button></Link>
