@@ -1,6 +1,8 @@
 import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authProvider } from "../../Authprovider/Authprovider";
+import { sendPasswordResetEmail } from "firebase/auth";
+import auth from "../Firebase/firebase.config";
 
 
 const Login = () => {
@@ -19,7 +21,7 @@ const Login = () => {
         const userPassword = e.target.password.value;
 
         loginUser(userEmail, userPassword)
-            .then((result) => {
+            .then(() => {
                 setSuccess("login SuccessFully!")
                 e.target.reset();
                 navigate('/');
@@ -42,6 +44,14 @@ const Login = () => {
             setError("Enter a valid email");
             return;
         }
+
+        sendPasswordResetEmail(auth,currentEmail)
+        .then(()=>{
+            setSuccess("check your "+currentEmail+" reset password!")
+        })
+        .catch(()=>{
+            setError("Wrong email!")
+        })
         
     }
 

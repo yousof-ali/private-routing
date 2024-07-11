@@ -1,15 +1,20 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { authProvider } from "../../Authprovider/Authprovider";
+import { updateProfile } from "firebase/auth";
+
 
 
 const Register = () => {
     
     const {registerUser}=useContext(authProvider);
+    const [error,setError]=useState('');
+    const navigate = useNavigate();
     
 
     const handleRegister = e =>{
         e.preventDefault()
+        setError("")
         const userName = e.target.name.value;
         const userEmail = e.target.email.value;
         const userPassword = e.target.password.value;
@@ -17,10 +22,23 @@ const Register = () => {
         registerUser(userEmail,userPassword)
         .then(result=>{
             console.log(result.user);
+            updateProfile(result.user,{
+                displayName:userName
+            })
+            .then(()=>{
+
+            })
+            .catch(()=>{
+                setError("something wrong!");
+            })
+            navigate("/");
         })
         .catch((error)=>{
             console.log(error.message);
+            setError("Try another Email !")
         })
+
+       
         
     }
     return (
@@ -51,6 +69,9 @@ const Register = () => {
                                 </label>
                                 <input type="password" placeholder="password" name="password" className="input input-bordered" required />
                             </div>
+                            {
+                                error&&<p className="text-red-600 text-sm mt-4">{error}</p>
+                            }
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Register</button>
                             </div>
